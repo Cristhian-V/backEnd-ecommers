@@ -1,15 +1,23 @@
 const express = require('express')
 const cors = require('cors')
 const {db} = require('../database/bd')
+const { userRouter } = require('../routes/userRotes')
+
 
 class Server {
   constructor(){
     this.app = express()
     this.port = process.env.PORT || 3000
+
+    this.paths = {
+      users: '/api/v1/users'
+    }
     
     this.middlewares()
-    this.routes()
+    
     this.dataBase()
+
+    this.routes()
   }
 
   middlewares(){
@@ -18,9 +26,7 @@ class Server {
   }
 
   routes(){
-    this.app.get('/api/v1/login', (req, res) => {
-      res.send('estoy aqui')
-    })
+    this.app.use(this.paths.users, userRouter)
   }
 
   dataBase(){
