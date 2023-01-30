@@ -27,6 +27,19 @@ const findUser = async(req, res) =>{
   }
 }
 
+const createUser = async(req,res) => {
+  try {
+    const createUser = await Users.create(req.body)
+    return res.status(200).json(`${createUser.name} usuario creado satisfactoriamente`)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      status:'fail',
+      message:'An error  has ocurred, talk to the adminitrator'
+    })
+  }
+}
+
 module.exports = {
-  findUsers, findUser
+  findUsers, findUser, createUser
 }
